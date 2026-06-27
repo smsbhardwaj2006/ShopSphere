@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop All Products — ShopSphere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header id="site-header" class="site-header"></header>
+
+  <main class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Shop all products</h2>
+          <p class="sub" id="results-summary">Browse our full catalog</p>
+        </div>
+      </div>
+
+      <div class="shop-layout">
+        <!-- FILTERS -->
+        <aside class="filter-panel">
+          <div class="filter-group">
+            <div class="filter-title">Category</div>
+            <label class="filter-option">
+              <input type="radio" name="category" value="" checked> All categories
+            </label>
+            <div id="category-filters"></div>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-title">Price range</div>
+            <div class="price-range">
+              <input type="number" id="price-min" placeholder="Min" min="0">
+              <span>–</span>
+              <input type="number" id="price-max" placeholder="Max" min="0">
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-title">Rating</div>
+            <label class="filter-option"><input type="radio" name="rating" value="0" checked> All ratings</label>
+            <label class="filter-option"><input type="radio" name="rating" value="4.5"> 4.5★ &amp; up</label>
+            <label class="filter-option"><input type="radio" name="rating" value="4"> 4★ &amp; up</label>
+          </div>
+
+          <button class="btn btn-outline btn-block btn-sm" id="clear-filters">Clear filters</button>
+        </aside>
+
+        <!-- RESULTS -->
+        <div>
+          <div class="shop-toolbar">
+            <span class="result-count" id="result-count"></span>
+            <select class="sort-select" id="sort-select">
+              <option value="default">Sort: Featured</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="rating-desc">Highest Rated</option>
+              <option value="name-asc">Name: A–Z</option>
+            </select>
+          </div>
+          <div class="product-grid" id="shop-grid"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/products-render.js"></script>
+  <script src="js/shop.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed — ShopSphere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header id="site-header" class="site-header"></header>
+
+  <main class="section">
+    <div class="container" style="max-width:600px;">
+      <div id="confirmation-root"></div>
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get("id");
+      const order = Store.getOrders().find(o => o.id === orderId);
+      const root = document.getElementById("confirmation-root");
+
+      if (!order) {
+        root.innerHTML = `
+          <div class="empty-state">
+            <div class="emoji">🤔</div>
+            <h3>Order not found</h3>
+            <a href="shop.html" class="btn btn-accent" style="margin-top:16px;">Back to shop</a>
+          </div>
+        `;
+        return;
+      }
+
+      root.innerHTML = `
+        <div class="auth-card" style="max-width:100%; text-align:center;">
+          <div style="font-size:3rem; margin-bottom:6px;">🎉</div>
+          <h2>Order placed!</h2>
+          <p class="sub">Order <strong>${order.id}</strong> · ${order.payment}</p>
+
+          <div style="text-align:left; background:var(--cream); border-radius:10px; padding:18px; margin:24px 0;">
+            ${order.items.map(i => `
+              <div class="summary-row"><span>${i.name} × ${i.qty}</span><span>${UI.formatPrice(i.price * i.qty)}</span></div>
+            `).join("")}
+            <div class="summary-row total"><span>Total</span><span>${UI.formatPrice(order.total)}</span></div>
+          </div>
+
+          <p style="font-size:0.88rem; color:var(--gray); margin-bottom:24px;">
+            Delivering to ${order.address.line}, ${order.address.city} ${order.address.pincode}
+          </p>
+
+          <a href="account.html" class="btn btn-accent btn-block">View order history</a>
+          <a href="shop.html" class="btn btn-outline btn-block" style="margin-top:10px;">Continue shopping</a>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>

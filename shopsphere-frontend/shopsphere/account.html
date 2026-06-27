@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account — ShopSphere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header id="site-header" class="site-header"></header>
+
+  <main class="section">
+    <div class="container" id="account-root" style="max-width:760px;">
+      <!-- Filled by script below -->
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const root = document.getElementById("account-root");
+      const user = Store.getUser();
+
+      if (!user) {
+        root.innerHTML = `
+          <div class="empty-state">
+            <div class="emoji">🔒</div>
+            <h3>You're not signed in</h3>
+            <p>Sign in to view your account and order history.</p>
+            <br>
+            <a href="login.html" class="btn btn-accent">Sign in</a>
+          </div>
+        `;
+        return;
+      }
+
+      const orders = Store.getOrders();
+      const statusClass = { Pending: "pending", Shipped: "shipped", Delivered: "delivered", Cancelled: "cancelled" };
+
+      root.innerHTML = `
+        <div class="section-head">
+          <div>
+            <h2>My account</h2>
+            <p class="sub">${user.name} · ${user.email}</p>
+          </div>
+          <button class="btn btn-outline btn-sm" id="logout-btn">Log out</button>
+        </div>
+
+        <h3 style="margin:28px 0 16px; font-size:1.2rem;">Order history</h3>
+
+        ${orders.length === 0 ? `
+          <div class="empty-state">
+            <div class="emoji">📦</div>
+            <h3>No orders yet</h3>
+            <p>Your placed orders will show up here.</p>
+            <br>
+            <a href="shop.html" class="btn btn-accent">Start shopping</a>
+          </div>
+        ` : orders.map(o => `
+          <div class="form-card" style="margin-bottom:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <strong>${o.id}</strong>
+              <span class="status-pill ${statusClass[o.status] || 'pending'}">${o.status}</span>
+            </div>
+            <div style="font-size:0.84rem; color:var(--gray); margin-bottom:10px;">
+              ${new Date(o.date).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+              · ${o.items.length} item${o.items.length > 1 ? "s" : ""} · ${o.payment}
+            </div>
+            <div style="font-weight:700;">${UI.formatPrice(o.total)}</div>
+          </div>
+        `).join("")}
+      `;
+
+      document.getElementById("logout-btn").addEventListener("click", Auth.logout);
+    });
+  </script>
+</body>
+</html>

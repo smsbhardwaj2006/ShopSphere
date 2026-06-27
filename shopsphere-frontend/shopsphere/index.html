@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopSphere — Shop smarter, not harder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header id="site-header" class="site-header"></header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div>
+          <div class="hero-eyebrow">Now live · Summer Collection</div>
+          <h1>Good design shouldn't cost a fortune</h1>
+          <p>Curated electronics, fashion, and home goods — picked for quality, priced for real budgets. Free returns on every order.</p>
+          <div class="hero-actions">
+            <a href="shop.html" class="btn btn-accent">Shop the collection</a>
+            <a href="shop.html?category=Electronics" class="btn btn-outline" style="border-color:rgba(247,247,242,0.3); color:#fff;">Browse Electronics</a>
+          </div>
+          <div class="hero-stats">
+            <div>
+              <div class="stat-num">12k+</div>
+              <div class="stat-label">Happy customers</div>
+            </div>
+            <div>
+              <div class="stat-num">4.7★</div>
+              <div class="stat-label">Average rating</div>
+            </div>
+            <div>
+              <div class="stat-num">24h</div>
+              <div class="stat-label">Dispatch time</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="tile"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Wireless headphones"></div>
+          <div class="tile"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500" alt="Pour-over coffee set"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="section-tight">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Shop by category</h2>
+            <p class="sub">Jump straight to what you came for</p>
+          </div>
+        </div>
+        <div class="category-strip" id="category-strip"></div>
+      </div>
+    </section>
+
+    <!-- FEATURED -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Featured products</h2>
+            <p class="sub">Hand-picked favorites from this week</p>
+          </div>
+          <a href="shop.html" class="view-all">View all products →</a>
+        </div>
+        <div class="product-grid" id="featured-grid"></div>
+      </div>
+    </section>
+
+    <!-- NEW ARRIVALS -->
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>New arrivals</h2>
+            <p class="sub">Just landed in the warehouse</p>
+          </div>
+          <a href="shop.html" class="view-all">View all →</a>
+        </div>
+        <div class="product-grid" id="new-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/products-render.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCategoryStrip(document.getElementById("category-strip"));
+      renderProductGrid(document.getElementById("featured-grid"), PRODUCTS.slice(0, 4));
+      renderProductGrid(document.getElementById("new-grid"), PRODUCTS.filter(p => p.isNew).concat(PRODUCTS.slice(4,6)).slice(0,4));
+    });
+  </script>
+</body>
+</html>
